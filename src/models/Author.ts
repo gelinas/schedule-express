@@ -59,7 +59,7 @@ export const AuthorFactory = (sequelize: Sequelize, postProcessors: PostProcesso
   postProcessors.associations.push(() => {
     AuthorModel.Stories = StoryModel.hasMany(StoryModel, {
       as: 'stories',
-      foreignKey: 'AuthorId',
+      foreignKey: 'authorId',
     });
   });
 

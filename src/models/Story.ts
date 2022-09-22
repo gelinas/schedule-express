@@ -94,7 +94,7 @@ export const StoryFactory = (sequelize: Sequelize, postProcessors: PostProcessor
     });
     StoryModel.Tags = StoryModel.belongsToMany(TagModel, {
       as: 'tags',
-      through: 'storyTags',
+      through: 'storytags',
       foreignKey: 'storyId',
       otherKey: 'tagId',
     });

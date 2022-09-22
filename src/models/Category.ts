@@ -47,13 +47,13 @@ export const CategoryFactory = (sequelize: Sequelize, postProcessors: PostProces
         allowNull: false,
       },
     },
-    { sequelize, tableName: 'authors' },
+    { sequelize, tableName: 'categories' },
   );
 
   postProcessors.associations.push(() => {
-    CategoryModel.Stories = StoryModel.hasMany(StoryModel, {
+    CategoryModel.Stories = CategoryModel.hasMany(StoryModel, {
       as: 'stories',
-      foreignKey: 'AuthorId',
+      foreignKey: 'authorId',
     });
   });
 
