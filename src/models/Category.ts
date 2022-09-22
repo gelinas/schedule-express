@@ -1,6 +1,6 @@
 import { Sequelize, Model, DataTypes, Association, UUIDV4 } from 'sequelize';
 import { CategoryInterface } from '../types';
-import { postProcessors } from '.';
+import { PostProcessors } from '.';
 import { StoryModel } from './Story';
 
 export class CategoryModel extends Model implements CategoryInterface {
@@ -17,7 +17,7 @@ export class CategoryModel extends Model implements CategoryInterface {
   static Stories: Association;
 }
 
-export const CategoryFactory = (sequelize: Sequelize, postProcessors: postProcessors) => {
+export const CategoryFactory = (sequelize: Sequelize, postProcessors: PostProcessors) => {
   CategoryModel.init(
     {
       id: {

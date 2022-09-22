@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes, UUIDV4 } from 'sequelize';
 import { TagInterface } from '../types';
-import { postProcessors } from '.';
+import { PostProcessors } from '.';
+import { sanitizeTags } from '../utils';
 
 export class TagModel extends Model implements TagInterface {
   public readonly id!: number;
@@ -12,7 +13,7 @@ export class TagModel extends Model implements TagInterface {
   public label!: string;
 }
 
-export const TagFactory = (sequelize: Sequelize, postProcessors: postProcessors) => {
+export const TagFactory = (sequelize: Sequelize, postProcessors: PostProcessors) => {
   TagModel.init(
     {
       id: {
@@ -46,8 +47,14 @@ export const TagFactory = (sequelize: Sequelize, postProcessors: postProcessors)
   );
 
   postProcessors.hooks.push(() => {
-    TagModel.beforeSave('sanitize', (tag) => {
-      tag.label = tag.label.trim().toLowerCase();
+    TagModel.beforeCreate((tag) => {
+      tag.label = sanitizeTags(tag.label);
+    });
+    TagModel.beforeUpdate((tag) => {
+      tag.label = sanitizeTags(tag.label);
+    });
+    TagModel.beforeSave((tag) => {
+      tag.label = sanitizeTags(tag.label);
     });
   });
 

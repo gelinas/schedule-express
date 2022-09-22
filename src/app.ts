@@ -19,6 +19,7 @@ app.get("/ping", (req, res) => {
 
 // all other calls
 
+
 // catch 404
 app.use(function (req, res) {
   return res.status(404).json({ message: "Invalid route (404)" });

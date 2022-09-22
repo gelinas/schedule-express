@@ -1,3 +1,6 @@
+import { AuthorModel } from './models/Author';
+import { CategoryModel } from './models/Category';
+import { StoryModel } from './models/Story';
 import { TagModel } from './models/Tag';
 
 export interface AuthorInterface {
@@ -10,7 +13,7 @@ export interface AuthorInterface {
   name: string;
   email: string | null;
 
-  // stories: StoryModel[];
+  stories: StoryModel[];
 }
 
 export interface CategoryInterface {
@@ -22,7 +25,7 @@ export interface CategoryInterface {
 
   label: string;
 
-  // stories: StoryModel[];
+  stories: StoryModel[];
 }
 
 export interface StoryInterface {
@@ -39,8 +42,8 @@ export interface StoryInterface {
   authorId: number;
   categoryId: number | null;
 
-  // author: AuthorModel;
-  // category: CategoryModel;
+  author: AuthorModel;
+  category: CategoryModel;
 
   tags: TagModel[];
 }

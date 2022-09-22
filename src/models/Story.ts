@@ -1,5 +1,5 @@
 import { Association, DataTypes, Model, Sequelize, UUIDV4 } from 'sequelize';
-import { postProcessors } from '.';
+import { PostProcessors } from '.';
 import { StoryInterface } from '../types';
 import { AuthorModel } from './Author';
 import { CategoryModel } from './Category';
@@ -28,7 +28,7 @@ export class StoryModel extends Model implements StoryInterface {
   static Tags: Association;
 }
 
-export const StoryFactory = (sequelize: Sequelize, postProcessors: postProcessors) => {
+export const StoryFactory = (sequelize: Sequelize, postProcessors: PostProcessors) => {
   StoryModel.init(
     {
       id: {
