@@ -5,33 +5,22 @@ import cls from 'cls-hooked';
 const namespace = cls.createNamespace('sequelize-orm-meetup');
 Sequelize.useCLS(namespace);
 
-const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config')[env];
+// const env = process.env.NODE_ENV || 'development';
+// const config = require('../config/config')[env];
 
-export const sequelize = new Sequelize(config.database, config.username, config.password, {
-  host: config.host,
-  port: 5432,
-  dialect: 'postgres',
-  ssl: Boolean(process.env.DB_DIALECT_SSL === 'true'),
-  dialectOptions: {
-    ssl: Boolean(process.env.DB_DIALECT_SSL === 'true') && {
-      require: true,
-      rejectUnauthorized: false,
-    },
-    encrypt: Boolean(process.env.DB_DIALECT_ENCRYPT === 'true'),
-  },
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000,
-  },
-  logging: config.logging,
+// a sequelize instance connecting to a sqlite3 database
+
+export const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './schedule_db.db',
 });
+
+console.log('boop');
 
 sequelize
   .authenticate()
   .then(() => {
-    console.info(`  [DB]: Database connected to ${config.username}@${config.database}:${config.host}`);
+    console.info(`  [DB]: Database connected to ${sequelize.getDialect()}`);
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err);

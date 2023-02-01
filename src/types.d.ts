@@ -1,9 +1,7 @@
-import { AuthorModel } from './models/Author';
-import { CategoryModel } from './models/Category';
-import { StoryModel } from './models/Story';
-import { TagModel } from './models/Tag';
+import { EngineerModel } from './models/Engineer';
+import { ShiftModel } from './models/Shift';
 
-export interface AuthorInterface {
+export interface EngineerInterface {
   id: number;
   createdAt: Date;
   deletedAt: Date | null;
@@ -13,58 +11,20 @@ export interface AuthorInterface {
   name: string;
   email: string | null;
 
-  stories: StoryModel[];
+  shifts: ShiftModel[];
 }
 
-export interface CategoryInterface {
+export interface ShiftInterface {
   id: number;
   createdAt: Date;
   deletedAt: Date | null;
   updatedAt: Date;
   uuid: string;
 
-  label: string;
+  engineerId: number;
 
-  stories: StoryModel[];
-}
+  startDate: Date;
+  endDate: Date;
 
-export interface StoryInterface {
-  id: number;
-  createdAt: Date;
-  deletedAt: Date | null;
-  updatedAt: Date;
-  uuid: string;
-
-  title: string;
-  body: string;
-  published: boolean;
-
-  authorId: number;
-  categoryId: number | null;
-
-  author: AuthorModel;
-  category: CategoryModel;
-
-  tags: TagModel[];
-}
-
-export interface StoryTagInterface {
-  id: number;
-  createdAt: Date;
-  deletedAt: Date | null;
-  updatedAt: Date;
-  uuid: string;
-
-  storyId: number;
-  tagId: number;
-}
-
-export interface TagInterface {
-  id: number;
-  createdAt: Date;
-  deletedAt: Date | null;
-  updatedAt: Date;
-  uuid: string;
-
-  label: string;
+  engineer: EngineerModel;
 }

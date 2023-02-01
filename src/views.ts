@@ -1,83 +1,60 @@
-import { Author, Story } from './models';
+import { Engineer, Shift } from './models';
 
 /**
- * authorsView
+ * engineersView
  *
  * @returns
  */
-export const authorsView = async () => {
-  const authors = await Author.findAll({
+export const engineersView = async () => {
+  const engineers = await Engineer.findAll({
     include: [
       {
-        association: Author.Stories,
+        association: Engineer.Shifts,
         separate: true,
-        include: [
-          {
-            association: Story.Category,
-          },
-          {
-            association: Story.Tags,
-          },
-        ],
       },
     ],
   });
-  return authors;
+  return engineers;
 };
 
 /**
- * authorsView
+ * engineersView
  *
  * @returns
  */
-export const authorsViewRaw = async () => {
-  const authors = await Author.findAll({
+export const engineersViewRaw = async () => {
+  const engineers = await Engineer.findAll({
     include: [
       {
-        association: Author.Stories,
+        association: Engineer.Shifts,
         separate: true,
-        include: [
-          {
-            association: Story.Category,
-          },
-          {
-            association: Story.Tags,
-          },
-        ],
       },
     ],
     raw: true,
     nest: true,
   });
-  return authors;
+  return engineers;
 };
 
-export const storyView = async (id: number) => {
-  const story = await Story.findByPk(id, {
-    include: [Story.Author, Story.Category, Story.Tags],
+export const shiftView = async (id: number) => {
+  const shift = await Shift.findByPk(id, {
+    include: [Shift.Engineer],
     plain: true,
   });
-  return story;
+  return shift;
 };
 
-export const storiesView = async () => {
-  const stories = await Story.findAll({
-    include: [Story.Author, Story.Category, Story.Tags],
+export const shiftsView = async () => {
+  const shifts = await Shift.findAll({
+    include: [Shift.Engineer],
   });
-  return stories;
+  return shifts;
 };
 
-export const storiesViewLogged = async () => {
-  const stories = await Story.findAll({
-    include: [Story.Author, Story.Category, Story.Tags],
+export const shiftsViewLogged = async () => {
+  const shifts = await Shift.findAll({
+    include: [Shift.Engineer],
     logging: console.log,
   });
-  return stories;
-};
-
-export const storView = async () => {
-  const stories = await Story.findAll({
-    include: [Story.Author, Story.Category, Story.Tags],
-  });
-  return stories;
+  return shifts;
 };

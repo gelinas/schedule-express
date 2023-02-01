@@ -1,9 +1,9 @@
 import { Sequelize, Model, DataTypes, Association, UUIDV4 } from 'sequelize';
-import { AuthorInterface } from '../types';
+import { EngineerInterface } from '../types';
 import { PostProcessors } from '.';
-import { StoryModel } from './Story';
+import { ShiftModel } from './Shift';
 
-export class AuthorModel extends Model implements AuthorInterface {
+export class EngineerModel extends Model implements EngineerInterface {
   public readonly id!: number;
   public readonly uuid!: string;
   public readonly createdAt!: Date;
@@ -12,15 +12,14 @@ export class AuthorModel extends Model implements AuthorInterface {
 
   public name!: string;
   public email!: string;
-  public published!: boolean;
 
-  public stories!: StoryModel[];
+  public shifts!: ShiftModel[];
 
-  static Stories: Association;
+  static Shifts: Association;
 }
 
-export const AuthorFactory = (sequelize: Sequelize, postProcessors: PostProcessors) => {
-  AuthorModel.init(
+export const EngineerFactory = (sequelize: Sequelize, postProcessors: PostProcessors) => {
+  EngineerModel.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -42,6 +41,7 @@ export const AuthorFactory = (sequelize: Sequelize, postProcessors: PostProcesso
       },
       uuid: {
         type: DataTypes.UUID,
+        allowNull: false,
         defaultValue: UUIDV4,
       },
       name: {
@@ -53,15 +53,15 @@ export const AuthorFactory = (sequelize: Sequelize, postProcessors: PostProcesso
         allowNull: true,
       },
     },
-    { sequelize, tableName: 'authors' },
+    { sequelize, tableName: 'engineers' },
   );
 
   postProcessors.associations.push(() => {
-    AuthorModel.Stories = StoryModel.hasMany(StoryModel, {
-      as: 'stories',
-      foreignKey: 'authorId',
+    EngineerModel.Shifts = EngineerModel.hasMany(ShiftModel, {
+      as: 'shifts',
+      foreignKey: 'engineerId',
     });
   });
 
-  return AuthorModel;
+  return EngineerModel;
 };
